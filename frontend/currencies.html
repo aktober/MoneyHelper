@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+    Currencies
+{% endblock %}
+
+{% block extra_header %}
+    <script src="{% static 'js/vue.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container" id="app">
+        <h2>Currencies page</h2>
+        <div class="table-responsive">
+
+            <div class="input-group mb-3 col-md-5">
+                <input type="text" class="form-control"
+                       placeholder="Currency"
+                       v-model="newCurrency">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"
+                            id="button-addon2" @click="addCurrency">Add
+                    </button>
+                </div>
+            </div>
+            <div v-if="errorMsg">
+                <div class="alert alert-danger" role="alert">
+                    [[ errorMsg ]]
+                </div>
+            </div>
+
+            <br>
+
+            <table class="table">
+                <tbody>
+                <template v-for="item in currencies">
+                    <tr :id="item.id">
+                        <td>[[ item.code ]]</td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm del-btn"
+                                    @click="deleteCurrency(item.id)">Delete
+                            </button>
+                        </td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

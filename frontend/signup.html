@@ -1,54 +1,69 @@
-<!doctype html>
-{% load static %}
-<html lang="en">
-  <head>
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>SignUp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'assets/signup/css/styles.min.css' %}">
+    <script src="{% static 'js/vue.js' %}"></script>
+</head>
 
-    <title>Signup</title>
+<body>
+    <div class="register-photo" id="signup">
+        <div class="form-container">
+            <div class="image-holder"></div>
+            <form method="post">
+                <h2 class="text-center"><strong>Create</strong> an account.</h2>
+                <div class="form-group">
+                    <input class="form-control"
+                           type="text"
+                           name="username"
+                           v-model="userData.username"
+                           placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input class="form-control"
+                           type="email"
+                           name="email"
+                           v-model="userData.email"
+                           placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input class="form-control"
+                           type="password"
+                           name="password"
+                           v-model="userData.password"
+                           placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <input class="form-control"
+                           type="password"
+                           name="password-repeat"
+                           v-model="userData.password2"
+                           placeholder="Password (repeat)">
+                </div>
 
-      <script src="{% static 'js/vue.js' %}"></script>
+                <div v-if="errorMsg" class="alert alert-danger" role="alert">[[ errorMsg ]]</div>
+                <div v-if="successMsg" v-html="successMsg" class="alert alert-success" role="alert">[[ successMsg ]]</div>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-          crossorigin="anonymous">
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block"
+                            type="submit"
+                            style="background-color: #2980ef;"
+                            @click.prevent="handleSubmit">Sign Up
+                    </button>
+                </div>
+                <a class="already" href="{% url 'login' %}">You already have an account? Login here.</a></form>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
-  </head>
-
-  <body class="text-center">
-
-  <div id="signup">
-      <form>
-          <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
-
-          <input type="text" v-model="userData.username" name="username" class="form-control"
-                 placeholder="Username" required>
-
-          <input type="email" v-model="userData.email" name="email" class="form-control"
-                 placeholder="Email" required>
-
-          <input type="password" v-model="userData.password" name="password" class="form-control"
-                 placeholder="Password" required>
-
-          <input type="password" v-model="userData.password2" name="password2" class="form-control"
-                 placeholder="Password confirmation" required>
-
-          <div v-if="errorMsg" class="alert alert-danger" role="alert">[[ errorMsg ]]</div>
-
-          <div v-if="successMsg" v-html="successMsg" class="alert alert-success" role="alert">[[ successMsg ]]</div>
-
-          <br>
-          <button class="btn btn-lg btn-primary btn-block"
-                  type="submit" @click.prevent="handleSubmit">Sign Up</button>
-
-      </form>
-  </div>
-  </body>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="{% static 'js/signup.js' %}"></script>
+</body>
+
 </html>
