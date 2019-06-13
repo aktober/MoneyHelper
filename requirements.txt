@@ -1,2 +1,11 @@
 Django==2.2.1
 djangorestframework==3.9.3
+
+# database
+psycopg2==2.8.2
+
+# Error: command '/usr/bin/clang' failed with exit status 1
+# Solution: env LDFLAGS="-L$(brew --prefix openssl)/lib" CFLAGS="-I$(brew --prefix openssl)/include" pip install -r requirements.txt
+
+# .env
+python-dotenv==0.10.3

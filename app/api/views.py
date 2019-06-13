@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 
 from app.models import Currency, Account, User
 from app.api.serializers import CurrencySerializer, AccountSerializer, \
@@ -16,11 +16,15 @@ class CurrencyViewSet(viewsets.ModelViewSet):
     """
     queryset = Currency.objects.all()
     serializer_class = CurrencySerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         user = self.request.user
-        u_obj = User.objects.prefetch_related('currencies').get(id=user.id)
-        return u_obj.currencies
+        if user.is_authenticated:
+            u_obj = User.objects.prefetch_related('currencies').get(id=user.id)
+            return u_obj.currencies
+        else:
+            return None
 
     def create(self, request, *args, **kwargs):
         data = request.data.dict()
