@@ -17,14 +17,15 @@ class CurrencySerializer(serializers.ModelSerializer):
 
 
 class AccountSerializer(serializers.ModelSerializer):
+    currency = CurrencySerializer(read_only=True)
 
     class Meta:
         model = Account
-        fields = ('id', 'name', 'currency', 'balance', 'user')
+        fields = ('id', 'name', 'currency', 'balance')
 
 
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'email', 'password', 'currencies', 'accounts']

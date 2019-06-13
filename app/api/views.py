@@ -17,13 +17,41 @@ class CurrencyViewSet(viewsets.ModelViewSet):
     queryset = Currency.objects.all()
     serializer_class = CurrencySerializer
 
+    def get_queryset(self):
+        user = self.request.user
+        u_obj = User.objects.prefetch_related('currencies').get(id=user.id)
+        return u_obj.currencies
+
+    def create(self, request, *args, **kwargs):
+        data = request.data.dict()
+        serializer = CurrencySerializer(data=data)
+        if serializer.is_valid():
+            c = serializer.save()
+            request.user.currencies.add(c.id)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
     Money Account CRUD
     """
-    queryset = Account.objects.all()
+    queryset = Account.objects.all().order_by('-id')
     serializer_class = AccountSerializer
+
+    def create(self, request, *args, **kwargs):
+        user_data = request.data.dict()
+        user_data['balance'] = float(user_data['balance'])
+
+        serializer = AccountSerializer(data=user_data)
+        if serializer.is_valid():
+            curr = Currency.objects.get(id=int(user_data['currency']))
+            acc = serializer.save(currency=curr)
+            request.user.accounts.add(acc.id)
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserViewSet(viewsets.ModelViewSet):
