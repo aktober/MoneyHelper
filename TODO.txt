@@ -1,2 +1,5 @@
 - use Docker
 - CI
+
+
+docker-compose run --no-deps --rm web python manage.py test;

@@ -20,7 +20,7 @@ SECRET_KEY = get_key('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -69,12 +69,18 @@ WSGI_APPLICATION = 'MoneyHelper.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': get_key('DB_NAME'),
-        'USER': get_key('DB_USER'),
-        'PASSWORD': get_key('DB_PWD'),
-        'HOST': get_key('DB_HOST'),
-        'PORT': get_key('DB_PORT'),
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME': get_key('DB_NAME'),
+        # 'USER': get_key('DB_USER'),
+        # 'PASSWORD': get_key('DB_PWD'),
+        # 'HOST': get_key('DB_HOST'),
+        # 'PORT': get_key('DB_PORT'),
+
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
