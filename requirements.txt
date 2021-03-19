@@ -1,5 +1,5 @@
 Django==2.2.1
-djangorestframework==3.9.3
+djangorestframework==3.11.2
 
 # database
 psycopg2==2.8.2
